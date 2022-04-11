@@ -1,3 +1,8 @@
+/*
+Covid 19 Data Exploration 
+Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
+*/
+
 create database Portfolio_Project;
 use Portfolio_Project;
 SHOW VARIABLES LIKE "local_infile";
