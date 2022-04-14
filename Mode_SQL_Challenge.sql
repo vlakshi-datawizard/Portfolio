@@ -1,3 +1,6 @@
+-- These are the queries from a SQL challenge conducted by mode.com 
+-- Queries range from basic to advanced
+
 -- Returns first 100 rows from sqlchallenge1.region
 SELECT * FROM sqlchallenge1.region LIMIT 100;
 
@@ -10,19 +13,23 @@ select count(*)from sqlchallenge1.orders;
 select count(*)from sqlchallenge1.region;
 
 -- account name with the longest website url
+
 select website,length(website)from sqlchallenge1.accounts
 order by length(website) DESC;
 
 -- how many sales rep have the letter e in the names
+
 select count(*) from sqlchallenge1.sales_reps
 where name ilike'%e%' or name ilike 'e%' or name ilike '%e';
 
 -- what is alphabetically first account name that contains &
+
 select * from sqlchallenge1.accounts 
 where name ilike '%&%' or name ilike '&%' or name ilike'%&'
 order by name;
 
 -- what is the id of the sales rep that sold the last order in may 2015
+
 select *from sqlchallenge1.orders 
 where extract(year from occurred_at)=2015 and extract(month from occurred_at)=05
 order by occurred_at desc;
@@ -30,6 +37,7 @@ select * from sqlchallenge1.accounts
 where id=2351;
 
 -- how many sales rep represent the north east region
+
 select count(* )from sqlchallenge1.sales_reps
 where region_id=1;
 
@@ -43,6 +51,7 @@ order by 1;
 
 -- Among sales reps Tia Amto,Delilah Krum and Soraya Fulton which one had accounts with the 
 -- greatest quantity ordered in september 2016
+
 select r.name,sub.total_quantity from
 (select a.sales_rep_id,sum(o.total ) as total_quantity from sqlchallenge1.orders o
 join sqlchallenge1.accounts a on o.account_id=a.id
@@ -52,6 +61,7 @@ join sqlchallenge1.sales_reps r on sub.sales_rep_id=r.id
 where r.name in('Tia Amato','Delilah Krum','Soraya Fulton');
 
 -- of accounts served by sales reps in north east ,one account has never bought any posters name the company
+
 select account_id ,poster_qty from sqlchallenge1.orders 
 where poster_qty=0;
 
@@ -76,6 +86,7 @@ select sales_rep_id,id,name from sqlchallenge1.accounts where id =1011 or id=389
 select id,region_id from sqlchallenge1.sales_reps where id in(321510,321990);
 
 -- how many accounts have never ordered poster
+
 select a.id, sum(o.poster_qty)
 FROM sqlchallenge1.accounts a left join sqlchallenge1.orders o
 on a.id=o.account_id
@@ -86,13 +97,11 @@ select count(distinct account_id)from sqlchallenge1.orders;
 
 -- what is the most common first name for  primary pocs
 
-
 select left(primary_poc,(strpos(primary_poc,' '))-1) as first_name,count(*) from sqlchallenge1.accounts
 group by first_name
 order by count(*) desc;
 
 -- -For the west region which month had the highest percent of poster orders by count during 2015
-
 
 select extract(month from occurred_at),(sum(poster_qty)/sum(total))*100 as poster_pct from sqlchallenge1.orders
 where extract(year from occurred_at)=2015 AND
